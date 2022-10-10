@@ -1,0 +1,22 @@
+.auth-container {
+  background-color: #051e27;
+  color: white;
+  max-width: 540px;
+  min-width: 300px;
+  width: 100%;
+  padding: 20px 30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+}
+
+.label {
+  color: white;
+}
+
+.auth-heading {
+  color: white;
+  font-size: 38px;
+}
