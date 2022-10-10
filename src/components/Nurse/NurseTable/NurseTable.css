@@ -8,10 +8,12 @@
 
 .delete-link {
   color: red;
+  cursor: pointer;
 }
 
 .edit-link {
   color: rgb(231, 177, 95);
+  cursor: pointer;
 }
 
 .favourite-container {
