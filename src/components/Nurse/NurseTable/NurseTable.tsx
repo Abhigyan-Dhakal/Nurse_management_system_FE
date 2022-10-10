@@ -1,18 +1,18 @@
+import axios from "axios";
+import { useEffect } from "react";
 import { Space, Table } from "antd";
-import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 import { setNurseData } from "../../../redux/slices/nurseSlice";
 import { RootState } from "../../../redux";
-import { Link } from "react-router-dom";
 import { StarFilled, StarOutlined } from "@ant-design/icons";
-// import { sortContact } from "../../../utils/sortContact";
 import { Nurse } from "../../../domain/Nurse";
-// import * as http from "../../../axios/axios";
-import "./NurseTable.css";
 import { openNotification } from "../../common/notification";
 import { NURSE_DEL_MESSAGE } from "../../../constants/constants";
 import { sortNurses } from "../../../utils/sortNurses";
-import axios from "axios";
+
+import "./NurseTable.css";
 
 const { Column } = Table;
 
@@ -20,9 +20,6 @@ type Props = {};
 
 export const NurseTable = (props: Props) => {
   const dispatch = useDispatch();
-
-  const [dataDeletion, setDataDeletion] = useState<boolean>(true);
-  const [roundingManager, setRoundingManager] = useState<boolean>(true);
 
   const nurses = useSelector((state: RootState) => state.nurseReducer.data);
 
@@ -45,16 +42,7 @@ export const NurseTable = (props: Props) => {
 
   useEffect(() => {
     getNurseData();
-    // if (dataDeletion) {
-    //   (async () => {
-    //     // let arrData = await axios.get("/nurses");
-    //     // const sortedNurses = sortNurses(arrData.data.data);
-    //     // dispatch(setNurseData(sortedNurses));
-    //     // setDataDeletion(false);
-    //     // setRoundingManager(false);
-    //   })();
-    //   console.log("Use effect ran");
-    // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getNurseData = async () => {
@@ -63,12 +51,14 @@ export const NurseTable = (props: Props) => {
     dispatch(setNurseData(sortedNurses));
   };
 
-  const handleDelete = async (key: number) => {};
+  const handleDelete = async (key: number) => {
+    await axios.delete(`/nurses/${key}`);
+    openNotification(NURSE_DEL_MESSAGE);
+    getNurseData();
+  };
 
   const handleRoundingManager = async (favourite: boolean, object: any) => {
     try {
-      console.log("this ran");
-      setRoundingManager((prev: boolean) => !prev);
       const formData = new FormData();
       formData.append("isRoundingManager", !object.roundingManager + "");
       await axios.put(`/nurses/${object.key}`, formData, {
@@ -87,7 +77,7 @@ export const NurseTable = (props: Props) => {
     <div>
       <Table dataSource={data} pagination={false}>
         <Column
-          title=""
+          title="Rounding Manager"
           dataIndex="roundingManager"
           key="key"
           render={(roundingManager: boolean, object: Nurse, index) => {
@@ -117,9 +107,15 @@ export const NurseTable = (props: Props) => {
 
         <Column title="Name" dataIndex="name" key="firstName" />
         <Column title="Email" dataIndex="email" key="email" />
-        <Column title="Work Number" dataIndex="workNo" key="workNo" />
-        <Column title="Home Number" dataIndex="homeNo" key="homeNo" />
-        <Column title="Mobile Number" dataIndex="mobileNo" key="mobileNo" />
+        <Column title="Working Days" dataIndex="workingDays" key="workNo" />
+        <Column
+          title="Duty Start Time"
+          dataIndex="dutyStartTime"
+          key="homeNo"
+        />
+        <Column title="Duty End Time" dataIndex="dutyEndTime" key="mobileNo" />
+        <Column title="Address" dataIndex="address" key="address" />
+        <Column title="Contact" dataIndex="contact" key="contact" />
 
         <Column
           title="Action"
@@ -128,17 +124,17 @@ export const NurseTable = (props: Props) => {
           render={(key) => (
             <Space size="small">
               <Link to={`${key}/edit-contact`}>
-                <a className="edit-link">Edit</a>
+                <div className="edit-link">Edit</div>
               </Link>
 
-              <a
+              <div
                 className="delete-link"
                 onClick={() => {
                   handleDelete(key);
                 }}
               >
                 Delete
-              </a>
+              </div>
             </Space>
           )}
         />
