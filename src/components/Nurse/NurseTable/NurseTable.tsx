@@ -123,7 +123,7 @@ export const NurseTable = (props: Props) => {
           dataIndex="key"
           render={(key) => (
             <Space size="small">
-              <Link to={`${key}/edit-contact`}>
+              <Link to={`${key}/edit-nurse`}>
                 <div className="edit-link">Edit</div>
               </Link>
 

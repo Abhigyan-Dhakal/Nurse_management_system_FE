@@ -1,5 +1,5 @@
 import { UploadOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Switch, Upload } from "antd";
+import { Button, Form, Input, InputNumber, Switch, Upload } from "antd";
 // import * as http from "../../../axios/axios";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -98,9 +98,17 @@ export const AddNurseForm = (props: Props) => {
       </Form.Item>
 
       <div>
-        <p className="form-label">Email</p>
+        <p className="form-label">
+          Email <span className="compulsory">*</span>
+        </p>
       </div>
-      <Form.Item colon={false} name="email" rules={[]}>
+      <Form.Item
+        colon={false}
+        name="email"
+        rules={[
+          { required: true, message: "Please enter valid email address!" },
+        ]}
+      >
         <Input />
       </Form.Item>
 
@@ -109,8 +117,12 @@ export const AddNurseForm = (props: Props) => {
           Working Days <span className="compulsory">*</span>
         </p>
       </div>
-      <Form.Item colon={false} name="workingDays" rules={[]}>
-        <Input />
+      <Form.Item
+        colon={false}
+        name="workingDays"
+        rules={[{ required: true, message: "Please enter working days!" }]}
+      >
+        <InputNumber min={1} max={30} defaultValue={26} />
       </Form.Item>
 
       <div>
@@ -118,7 +130,11 @@ export const AddNurseForm = (props: Props) => {
           Duty Start Time <span className="compulsory">*</span>
         </p>
       </div>
-      <Form.Item colon={false} name="dutyStartTime" rules={[]}>
+      <Form.Item
+        colon={false}
+        name="dutyStartTime"
+        rules={[{ required: true, message: "Please provide duty start time!" }]}
+      >
         <Input />
       </Form.Item>
 
@@ -127,28 +143,38 @@ export const AddNurseForm = (props: Props) => {
           Duty End Time <span className="compulsory">*</span>
         </p>
       </div>
-      <Form.Item colon={false} name="dutyEndTime" rules={[]}>
-        <Input />
-      </Form.Item>
-
-      <div>
-        <p className="form-label">Address</p>
-      </div>
       <Form.Item
         colon={false}
-        name="address"
-        rules={[{ required: true, message: "Please provide a mobile number!" }]}
+        name="dutyEndTime"
+        rules={[{ required: true, message: "Please provide duty end time!" }]}
       >
         <Input />
       </Form.Item>
 
       <div>
-        <p className="form-label">Contact</p>
+        <p className="form-label">
+          Address <span className="compulsory">*</span>
+        </p>
+      </div>
+      <Form.Item
+        colon={false}
+        name="address"
+        rules={[{ required: true, message: "Please provide an address!" }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <div>
+        <p className="form-label">
+          Contact <span className="compulsory">*</span>
+        </p>
       </div>
       <Form.Item
         colon={false}
         name="contact"
-        rules={[{ required: true, message: "Please provide a mobile number!" }]}
+        rules={[
+          { required: true, message: "Please provide a contact number!" },
+        ]}
       >
         <Input type="number" />
       </Form.Item>

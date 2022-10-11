@@ -10,6 +10,8 @@ import {
   NotFound,
   Register,
 } from "../pages";
+import { AddNurse } from "../pages/add-nurse";
+import { EditNurse } from "../pages/edit-nurse";
 
 type Props = {};
 
@@ -22,8 +24,8 @@ export const AppRoutes = (props: Props) => {
       <Route path="/" element={<ProtectedRoutes />}>
         <Route path="/" element={<BasicLayout />}>
           <Route path="nurses/" element={<Nurses />} />
-          {/* <Route path="nurses/add-nurse" element={<AddNurse />} />
-          <Route path="nurses/:id/edit-nurse" element={<EditNurse />} /> */}
+          <Route path="nurses/add-nurse" element={<AddNurse />} />
+          <Route path="nurses/:id/edit-nurse" element={<EditNurse />} />
         </Route>
       </Route>
       <Route path="*" element={<NotFound />}></Route>
