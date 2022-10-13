@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { removeDataFromLocalStorage } from "../../utils/handleToken";
 
 type Props = {};
 
@@ -10,7 +11,7 @@ export const Navbar = (props: Props) => {
   };
 
   const handleClick = () => {
-    // removeDataFromLocalStorage();
+    removeDataFromLocalStorage();
   };
 
   return (

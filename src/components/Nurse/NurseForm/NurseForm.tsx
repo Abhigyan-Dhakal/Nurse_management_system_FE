@@ -1,5 +1,13 @@
 import { UploadOutlined } from "@ant-design/icons";
-import { Button, Form, Input, InputNumber, Switch, Upload } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Switch,
+  TimePicker,
+  Upload,
+} from "antd";
 // import * as http from "../../../axios/axios";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -10,12 +18,16 @@ import {
   NURSE_EDITED_MESSAGE,
 } from "../../../constants/constants";
 
+import moment from "moment";
+import axios from "axios";
+
 type Props = {};
 
 export const AddNurseForm = (props: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const params = useParams();
+  console.log(params);
 
   const [form] = Form.useForm();
 
@@ -24,12 +36,33 @@ export const AddNurseForm = (props: Props) => {
   useEffect(() => {
     if (location.pathname === "/nurses/add-nurse") {
       form.setFieldsValue({
-        favourite: false,
+        roundingManager: false,
       });
       setIsAddForm(true);
     } else {
       (async () => {
         const nurseId = params.id;
+        const res = await axios.get(`/nurses/${nurseId}`);
+        const nurseData = res.data.data;
+
+        const startTime = new Date(nurseData.dutyStartTime);
+        const endTime = new Date(nurseData.dutyEndTime);
+
+        console.log(nurseData);
+
+        form.setFieldsValue({
+          name: nurseData.name,
+          email: nurseData.email,
+          workingDays: nurseData.workingDays,
+          dutyStartTime: moment(
+            moment(startTime).format("HH:mm:ss"),
+            "HH:mm:ss"
+          ),
+          dutyEndTime: moment(moment(endTime).format("HH:mm:ss"), "HH:mm:ss"),
+          address: nurseData.address,
+          contact: nurseData.contact,
+          isRoundingManager: nurseData.isRoundingManager,
+        });
       })();
 
       setIsAddForm(false);
@@ -42,8 +75,9 @@ export const AddNurseForm = (props: Props) => {
 
   const onFinish = async (values: any) => {
     const formData = new FormData();
+
     formData.append("name", values.name);
-    formData.append("isRoundingManager", values.roundingManager);
+    formData.append("isRoundingManager", values.isRoundingManager);
     formData.append("workingDays", values.workingDays);
     formData.append("dutyStartTime", values.dutyStartTime);
     formData.append("dutyEndTime", values.dutyEndTime);
@@ -51,9 +85,16 @@ export const AddNurseForm = (props: Props) => {
     formData.append("email", values.email);
     formData.append("contact", values.contact);
 
+    console.log(values);
+
     if (isAddForm) {
       formData.append("photograph", values.picture.file.originFileObj);
       try {
+        await axios.post("/nurses", formData, {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        });
         openNotification(NURSE_ADDED_MESSAGE);
       } catch (err) {
         console.log(err);
@@ -62,6 +103,11 @@ export const AddNurseForm = (props: Props) => {
       values.picture?.file.originFileObj &&
         formData.append("photograph", values.picture.file.originFileObj);
       try {
+        await axios.put(`/nurses/${params.id}`, formData, {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        });
         openNotification(NURSE_EDITED_MESSAGE);
       } catch (err) {
         console.log(err);
@@ -122,7 +168,7 @@ export const AddNurseForm = (props: Props) => {
         name="workingDays"
         rules={[{ required: true, message: "Please enter working days!" }]}
       >
-        <InputNumber min={1} max={30} defaultValue={26} />
+        <InputNumber min={1} max={30} style={{ width: "100%" }} />
       </Form.Item>
 
       <div>
@@ -135,7 +181,7 @@ export const AddNurseForm = (props: Props) => {
         name="dutyStartTime"
         rules={[{ required: true, message: "Please provide duty start time!" }]}
       >
-        <Input />
+        <TimePicker style={{ width: "100%" }} />
       </Form.Item>
 
       <div>
@@ -148,7 +194,10 @@ export const AddNurseForm = (props: Props) => {
         name="dutyEndTime"
         rules={[{ required: true, message: "Please provide duty end time!" }]}
       >
-        <Input />
+        <TimePicker
+          defaultOpenValue={moment("00:00:00", "HH:mm:ss")}
+          style={{ width: "100%" }}
+        />
       </Form.Item>
 
       <div>
@@ -182,7 +231,7 @@ export const AddNurseForm = (props: Props) => {
       <div>
         <p className="form-label">Rounding Manager</p>
       </div>
-      <Form.Item name="roundingManager" valuePropName="checked">
+      <Form.Item name="isRoundingManager" valuePropName="checked">
         <Switch checked={false} />
       </Form.Item>
       <div>

@@ -13,6 +13,7 @@ import { NURSE_DEL_MESSAGE } from "../../../constants/constants";
 import { sortNurses } from "../../../utils/sortNurses";
 
 import "./NurseTable.css";
+import moment from "moment";
 
 const { Column } = Table;
 
@@ -30,8 +31,8 @@ export const NurseTable = (props: Props) => {
       name: nurse.name,
       email: nurse.email,
       workingDays: nurse.workingDays,
-      dutyStartTime: nurse.dutyStartTime,
-      dutyEndTime: nurse.dutyEndTime,
+      dutyStartTime: moment(nurse.dutyStartTime).format("LT"),
+      dutyEndTime: moment(nurse.dutyEndTime).format("LT"),
       roundingManager: nurse.isRoundingManager,
       address: nurse.address,
       contact: nurse.contact,
