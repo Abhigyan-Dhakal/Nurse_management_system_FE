@@ -21,7 +21,7 @@
   font-weight: bold;
 }
 
-.add-contact-btn {
+.add-nurse-btn {
   background-color: #00407c;
   padding: 10px 20px;
   color: white !important;
@@ -29,6 +29,6 @@
   transition: background-color 0.3s ease-in-out;
 }
 
-.add-contact-btn:hover {
+.add-nurse-btn:hover {
   background-color: #002a52;
 }

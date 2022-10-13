@@ -23,7 +23,7 @@ export const Navbar = (props: Props) => {
         <NavLink
           style={Styling}
           to={"/nurses/add-nurse"}
-          className="add-contact-btn"
+          className="add-nurse-btn"
         >
           Add Nurse
         </NavLink>
