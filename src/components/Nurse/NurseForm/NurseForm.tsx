@@ -27,7 +27,6 @@ export const AddNurseForm = (props: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const params = useParams();
-  console.log(params);
 
   const [form] = Form.useForm();
 
@@ -47,8 +46,6 @@ export const AddNurseForm = (props: Props) => {
 
         const startTime = new Date(nurseData.dutyStartTime);
         const endTime = new Date(nurseData.dutyEndTime);
-
-        console.log(nurseData);
 
         form.setFieldsValue({
           name: nurseData.name,
@@ -84,8 +81,6 @@ export const AddNurseForm = (props: Props) => {
     formData.append("address", values.address);
     formData.append("email", values.email);
     formData.append("contact", values.contact);
-
-    console.log(values);
 
     if (isAddForm) {
       formData.append("photograph", values.picture.file.originFileObj);

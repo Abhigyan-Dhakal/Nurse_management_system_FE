@@ -5,7 +5,6 @@ import { getTokenFromLocalStorage } from "../utils/handleToken";
 
 const reqInterceptor = (config: AxiosRequestConfig): AxiosRequestConfig => {
   const { accessToken } = getTokenFromLocalStorage();
-  console.log("Aucces token", accessToken);
   if (accessToken && config.headers) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
