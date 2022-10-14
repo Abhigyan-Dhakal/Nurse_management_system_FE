@@ -1,4 +1,10 @@
+import axios from "axios";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+
 import { UploadOutlined } from "@ant-design/icons";
+
 import {
   Button,
   Form,
@@ -8,18 +14,22 @@ import {
   TimePicker,
   Upload,
 } from "antd";
-// import * as http from "../../../axios/axios";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import "./NurseForm.css";
 import { openNotification } from "../../common/notification";
+
 import {
+  EMPTY_ADDRESS,
+  EMPTY_CONTACT_NO,
+  EMPTY_DUTY_END_TIME,
+  EMPTY_DUTY_START_TIME,
+  EMPTY_IMAGE_UPLOAD,
+  EMPTY_NURSE_NAME,
+  EMPTY_WORKING_DAYS,
+  INVALID_EMAIL,
   NURSE_ADDED_MESSAGE,
   NURSE_EDITED_MESSAGE,
 } from "../../../constants/constants";
 
-import moment from "moment";
-import axios from "axios";
+import "./NurseForm.css";
 
 type Props = {};
 
@@ -64,7 +74,7 @@ export const AddNurseForm = (props: Props) => {
 
       setIsAddForm(false);
     }
-  }, []);
+  }, [form, location.pathname, params.id]);
 
   function onProfileUpload(info: any) {
     console.log("Done");
@@ -133,22 +143,18 @@ export const AddNurseForm = (props: Props) => {
       <Form.Item
         colon={false}
         name="name"
-        rules={[{ required: true, message: "Please enter nurse's name!" }]}
+        rules={[{ required: true, message: EMPTY_NURSE_NAME }]}
       >
         <Input />
       </Form.Item>
 
       <div>
-        <p className="form-label">
-          Email <span className="compulsory">*</span>
-        </p>
+        <p className="form-label">Email</p>
       </div>
       <Form.Item
         colon={false}
         name="email"
-        rules={[
-          { required: true, message: "Please enter valid email address!" },
-        ]}
+        rules={[{ type: "email", message: INVALID_EMAIL }]}
       >
         <Input />
       </Form.Item>
@@ -161,7 +167,7 @@ export const AddNurseForm = (props: Props) => {
       <Form.Item
         colon={false}
         name="workingDays"
-        rules={[{ required: true, message: "Please enter working days!" }]}
+        rules={[{ required: true, message: EMPTY_WORKING_DAYS }]}
       >
         <InputNumber min={1} max={30} style={{ width: "100%" }} />
       </Form.Item>
@@ -174,7 +180,7 @@ export const AddNurseForm = (props: Props) => {
       <Form.Item
         colon={false}
         name="dutyStartTime"
-        rules={[{ required: true, message: "Please provide duty start time!" }]}
+        rules={[{ required: true, message: EMPTY_DUTY_START_TIME }]}
       >
         <TimePicker style={{ width: "100%" }} />
       </Form.Item>
@@ -187,7 +193,7 @@ export const AddNurseForm = (props: Props) => {
       <Form.Item
         colon={false}
         name="dutyEndTime"
-        rules={[{ required: true, message: "Please provide duty end time!" }]}
+        rules={[{ required: true, message: EMPTY_DUTY_END_TIME }]}
       >
         <TimePicker
           defaultOpenValue={moment("00:00:00", "HH:mm:ss")}
@@ -203,7 +209,7 @@ export const AddNurseForm = (props: Props) => {
       <Form.Item
         colon={false}
         name="address"
-        rules={[{ required: true, message: "Please provide an address!" }]}
+        rules={[{ required: true, message: EMPTY_ADDRESS }]}
       >
         <Input />
       </Form.Item>
@@ -216,9 +222,7 @@ export const AddNurseForm = (props: Props) => {
       <Form.Item
         colon={false}
         name="contact"
-        rules={[
-          { required: true, message: "Please provide a contact number!" },
-        ]}
+        rules={[{ required: true, message: EMPTY_CONTACT_NO }]}
       >
         <Input type="number" />
       </Form.Item>
@@ -238,7 +242,7 @@ export const AddNurseForm = (props: Props) => {
         name="picture"
         rules={[
           isAddForm
-            ? { required: true, message: "Please upload an image!" }
+            ? { required: true, message: EMPTY_IMAGE_UPLOAD }
             : { required: false },
         ]}
       >

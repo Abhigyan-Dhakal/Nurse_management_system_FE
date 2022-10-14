@@ -1,14 +1,21 @@
+import React from "react";
+import axios from "axios";
 import { Button, Form, Input } from "antd";
-import "./LoginForm.css";
-// import * as http from "../../axios/axios";
 import { useNavigate } from "react-router-dom";
+
+import "./LoginForm.css";
+
 import { openNotification } from "../common/notification";
+
 import {
   BAD_REQ_MESSAGE,
   INVALID_CREDENTIALS_MESSAGE,
   LOGGED_IN_MESSAGE,
+  EMPTY_EMAIL,
+  INVALID_EMAIL,
+  EMPTY_PASSWORD,
 } from "../../constants/constants";
-import axios from "axios";
+
 import { setDataToLocalStorage } from "../../utils/handleToken";
 
 type Props = {};
@@ -23,11 +30,15 @@ export const LoginForm = (props: Props) => {
       const data = res.data.data;
       if (data) {
         setDataToLocalStorage(data.access, data.refresh, "true", data.user_id);
+
         navigate("/nurses");
+
         form.resetFields();
+
         openNotification(LOGGED_IN_MESSAGE);
       } else {
         openNotification(INVALID_CREDENTIALS_MESSAGE);
+
         form.resetFields();
       }
     } catch (err) {
@@ -56,8 +67,8 @@ export const LoginForm = (props: Props) => {
         colon={false}
         name="email"
         rules={[
-          { required: true, message: "Please enter your email!" },
-          { type: "email", message: "Please enter valid email!" },
+          { required: true, message: EMPTY_EMAIL },
+          { type: "email", message: INVALID_EMAIL },
         ]}
       >
         <Input />
@@ -69,7 +80,7 @@ export const LoginForm = (props: Props) => {
       <Form.Item
         name="password"
         colon={false}
-        rules={[{ required: true, message: "Please enter your password!" }]}
+        rules={[{ required: true, message: EMPTY_PASSWORD }]}
       >
         <Input.Password />
       </Form.Item>

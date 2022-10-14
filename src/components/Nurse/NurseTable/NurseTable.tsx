@@ -1,19 +1,24 @@
 import axios from "axios";
-import { useEffect } from "react";
+import moment from "moment";
 import { Space, Table } from "antd";
 import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setNurseData } from "../../../redux/slices/nurseSlice";
-import { RootState } from "../../../redux";
 import { StarFilled, StarOutlined } from "@ant-design/icons";
-import { Nurse } from "../../../domain/Nurse";
+
 import { openNotification } from "../../common/notification";
+
+import { Nurse } from "../../../domain/Nurse";
+
+import { RootState } from "../../../redux";
+import { setNurseData } from "../../../redux/slices/nurseSlice";
+
 import { NURSE_DEL_MESSAGE } from "../../../constants/constants";
+
 import { sortNurses } from "../../../utils/sortNurses";
 
 import "./NurseTable.css";
-import moment from "moment";
 
 const { Column } = Table;
 

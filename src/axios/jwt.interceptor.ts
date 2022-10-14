@@ -8,6 +8,7 @@ const reqInterceptor = (config: AxiosRequestConfig): AxiosRequestConfig => {
   if (accessToken && config.headers) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
+
   return config;
 };
 
@@ -15,7 +16,7 @@ const reqErrorInterceptor = (error: AxiosError) => {
   return Promise.reject(error);
 };
 
-interface RespConf extends AxiosRequestConfig {
+interface ResponseConf extends AxiosRequestConfig {
   sent?: boolean;
 }
 
@@ -23,12 +24,13 @@ const resErrorInterceptor = async (
   error: AxiosError,
   reqInterceptorId: number
 ) => {
-  const previousReq: RespConf = error.config;
+  const previousReq: ResponseConf = error.config;
   if (error.response?.status === 401 && !previousReq?.sent) {
     await getToken();
     axios.interceptors.request.eject(reqInterceptorId);
     axios.interceptors.request.use(reqInterceptor);
     previousReq.sent = true;
+
     return axios(previousReq);
   }
 

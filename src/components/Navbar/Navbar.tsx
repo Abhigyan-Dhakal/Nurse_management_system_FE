@@ -1,5 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+
+import { APP_TITLE } from "../../constants/constants";
+
 import { removeDataFromLocalStorage } from "../../utils/handleToken";
 
 type Props = {};
@@ -17,7 +20,7 @@ export const Navbar = (props: Props) => {
   return (
     <div className="navbar">
       <div>
-        <h1 className="logo">Nurse Management System</h1>
+        <h1 className="logo">{APP_TITLE}</h1>
       </div>
       <div className="nav-items">
         <NavLink

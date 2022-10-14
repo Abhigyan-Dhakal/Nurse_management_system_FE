@@ -1,7 +1,7 @@
 export interface Nurse {
   nurse_id: number;
   name: string;
-  email: string;
+  email?: string;
   photograph: string;
   workingDays: number;
   dutyStartTime: string;

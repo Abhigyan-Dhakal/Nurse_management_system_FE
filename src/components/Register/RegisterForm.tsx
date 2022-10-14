@@ -1,6 +1,17 @@
-import { Button, Form, Input } from "antd";
+import React from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-// import * as http from "../../axios/axios";
+
+import { Button, Form, Input } from "antd";
+
+import {
+  EMPTY_CONTACT,
+  EMPTY_EMAIL,
+  EMPTY_FIRST_NAME,
+  EMPTY_LAST_NAME,
+  EMPTY_PASSWORD,
+  INVALID_EMAIL,
+} from "../../constants/constants";
 
 type Props = {};
 
@@ -8,7 +19,7 @@ export const RegisterForm = (props: Props) => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     const submittedData = {
       first_name: values.firstName,
       last_name: values.lastName,
@@ -17,7 +28,8 @@ export const RegisterForm = (props: Props) => {
       password: values.password,
     };
 
-    // http.registerUser(submittedData);
+    await axios.post("/users", submittedData);
+
     form.resetFields();
     navigate("/login");
   };
@@ -40,7 +52,7 @@ export const RegisterForm = (props: Props) => {
       <Form.Item
         colon={false}
         name="firstName"
-        rules={[{ required: true, message: "Please enter your first name!" }]}
+        rules={[{ required: true, message: EMPTY_FIRST_NAME }]}
       >
         <Input />
       </Form.Item>
@@ -51,7 +63,7 @@ export const RegisterForm = (props: Props) => {
       <Form.Item
         colon={false}
         name="lastName"
-        rules={[{ required: true, message: "Please enter your last name!" }]}
+        rules={[{ required: true, message: EMPTY_LAST_NAME }]}
       >
         <Input />
       </Form.Item>
@@ -62,7 +74,7 @@ export const RegisterForm = (props: Props) => {
       <Form.Item
         colon={false}
         name="contact"
-        rules={[{ required: true, message: "Please enter your contact!" }]}
+        rules={[{ required: true, message: EMPTY_CONTACT }]}
       >
         <Input />
       </Form.Item>
@@ -74,8 +86,8 @@ export const RegisterForm = (props: Props) => {
         colon={false}
         name="email"
         rules={[
-          { required: true, message: "Please input your email!" },
-          { type: "email", message: "Please enter valid email!" },
+          { required: true, message: EMPTY_EMAIL },
+          { type: "email", message: INVALID_EMAIL },
         ]}
       >
         <Input />
@@ -87,7 +99,7 @@ export const RegisterForm = (props: Props) => {
       <Form.Item
         name="password"
         colon={false}
-        rules={[{ required: true, message: "Please input your password!" }]}
+        rules={[{ required: true, message: EMPTY_PASSWORD }]}
       >
         <Input.Password />
       </Form.Item>
