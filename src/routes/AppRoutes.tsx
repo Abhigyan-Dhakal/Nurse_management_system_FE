@@ -3,15 +3,13 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import ProtectedRoutes from "../components/ProtectedRoutes/ProtectedRoutes";
 import { BasicLayout } from "../layout/BasicLayout";
 import {
-  // AddNurse,
+  AddNurse,
   Nurses,
-  // EditNurse,
+  EditNurse,
   Login,
   NotFound,
   Register,
 } from "../pages";
-import { AddNurse } from "../pages/add-nurse";
-import { EditNurse } from "../pages/edit-nurse";
 
 type Props = {};
 
