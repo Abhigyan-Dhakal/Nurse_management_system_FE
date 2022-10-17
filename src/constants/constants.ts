@@ -22,4 +22,4 @@ export const EMPTY_DUTY_START_TIME = "Please provide duty start time!";
 export const EMPTY_DUTY_END_TIME = "Please provide duty end time!";
 export const EMPTY_ADDRESS = "Please provide an address!";
 export const EMPTY_CONTACT_NO = "Please provide an address!";
-export const EMPTY_IMAGE_UPLOAD = "Please provide an address!";
+export const EMPTY_IMAGE_UPLOAD = "Please provide an image!";

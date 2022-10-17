@@ -45,7 +45,7 @@ export const AddNurseForm = (props: Props) => {
   useEffect(() => {
     if (location.pathname === "/nurses/add-nurse") {
       form.setFieldsValue({
-        roundingManager: false,
+        isRoundingManager: false,
       });
       setIsAddForm(true);
     } else {
