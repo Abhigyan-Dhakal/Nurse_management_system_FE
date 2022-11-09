@@ -2,6 +2,10 @@
 
 This following repository is for the frontend of Nurse management application developed using Typescript and React JS
 
+## URL for the deployed site
+
+https://roaring-tapioca-8e72cc.netlify.app/login
+
 ## Scripts to run the application
 
 ### `yarn`
