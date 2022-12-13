@@ -6,6 +6,12 @@ This following repository is for the frontend of Nurse management application de
 
 https://roaring-tapioca-8e72cc.netlify.app/login
 
+## Copying the environment example file to .env
+
+### `cp .env.example .env`
+
+Creates a .env file with the contents of .env.example file.
+
 ## Scripts to run the application
 
 ### `yarn`
