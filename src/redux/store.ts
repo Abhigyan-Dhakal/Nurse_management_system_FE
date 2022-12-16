@@ -1,12 +1,14 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import nurseReducer from "./slices/nurseSlice";
 import userReducer from "./slices/userSlice";
 
+export const allReducers = combineReducers({
+  nurseReducer,
+  userReducer,
+});
+
 export const store = configureStore({
-  reducer: {
-    nurseReducer,
-    userReducer,
-  },
+  reducer: allReducers,
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
